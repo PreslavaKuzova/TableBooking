@@ -35,28 +35,31 @@
 					type="password" name="password" id="password"
 					placeholder="Enter your password" required />
 			</div>
-			<%! String hidden = "hidden"; %>
-			<input class="login-button" type="submit" value="LOGIN"/>
+			<%!boolean buttonPressed = false;%>
+			<input class="login-button" type="submit" value="LOGIN"
+				onclick="<%buttonPressed = true;%>" />
 		</form>
 		<img class="divider" src="Graphics/gray-divider.png" />
 
 		<jsp:useBean id="database" class="com.database.UserDatabase" />
-		
-		<p class="message">
-		<%
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			if (database.checkNames(username)) {
-				if (database.checkPassword(username, password)) {
-					response.sendRedirect("book.html?success=true&username="+ request.getParameter("username")); //transfer to book.html page
-				} else {
-					out.print("<b>Invalid password. Try again!</b></p>");
-				}
-			} else {
-				out.print("<b>Invalid username. Try again!</b></p>");
 
-			}
-		%>
+		<p class="message">
+			<%
+				if (buttonPressed) {
+					String username = request.getParameter("username");
+					String password = request.getParameter("password");
+					if (database.checkNames(username)) {
+						if (database.checkPassword(username, password)) {
+							response.sendRedirect("book.html?success=true&username=" + request.getParameter("username")); //transfer to book.html page
+						} else {
+							out.print("<b>Invalid password. Try again!</b></p>");
+						}
+					} else {
+						out.print("<b>Invalid username. Try again!</b></p>");
+
+					}
+				}
+			%>
 		</p>
 
 		<p class="registration-information">
