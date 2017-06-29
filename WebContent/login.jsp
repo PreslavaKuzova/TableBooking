@@ -26,7 +26,7 @@
 
 	<div class="wrapper">
 		<h1 class="login-text">LOGIN</h1>
-		<form action="login.jsp">
+		<form action="login.jsp" method="post">
 			<div class="user-info">
 				<p class="login-info">In order to make a reservation, you have
 					to sign in your account.</p>
@@ -35,22 +35,21 @@
 					type="password" name="password" id="password"
 					placeholder="Enter your password" required />
 			</div>
-			<%!boolean buttonPressed = false;%>
-			<input class="login-button" type="submit" value="LOGIN"
-				onclick="<%buttonPressed = true;%>" />
-		</form>
+			<input class="login-button" type="submit" value="LOGIN" /> 
+						</form>
+						
 		<img class="divider" src="Graphics/gray-divider.png" />
 
 		<jsp:useBean id="database" class="com.database.UserDatabase" />
 
 		<p class="message">
 			<%
-				if (buttonPressed) {
+				if (request.getParameter("username")!= null) {
 					String username = request.getParameter("username");
 					String password = request.getParameter("password");
 					if (database.checkNames(username)) {
 						if (database.checkPassword(username, password)) {
-							response.sendRedirect("book.html?success=true&username=" + request.getParameter("username")); //transfer to book.html page
+							response.sendRedirect("book.html?username=" + request.getParameter("username")); //transfer to book.html page
 						} else {
 							out.print("<b>Invalid password. Try again!</b></p>");
 						}
