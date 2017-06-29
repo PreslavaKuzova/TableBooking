@@ -36,19 +36,13 @@
 					placeholder="Enter your password" required />
 			</div>
 			<%! String hidden = "hidden"; %>
-			<input class="login-button" type="submit" value="LOGIN" onclick="makeVisible()"/>
+			<input class="login-button" type="submit" value="LOGIN"/>
 		</form>
 		<img class="divider" src="Graphics/gray-divider.png" />
 
 		<jsp:useBean id="database" class="com.database.UserDatabase" />
 		
-		
-		<%! void makeVisible(){
-			hidden = "visible";
-		}
-		%>
-		
-		<p <%= hidden  %> class="message">
+		<p class="message">
 		<%
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");

@@ -60,3 +60,10 @@ src: url("Cheque.otf") format("opentype");
     font-size: 25px;
 	color: #BDBDBD;
 }
+
+.message {
+	font-family: "Arial";
+    font-size: 25px;
+	color: red;
+	text-align: center; 
+}
