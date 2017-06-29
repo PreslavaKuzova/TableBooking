@@ -54,7 +54,7 @@
 			String password = request.getParameter("password");
 			if (database.checkNames(username)) {
 				if (database.checkPassword(username, password)) {
-					response.sendRedirect("book.html"); //transfer to book.html page
+					response.sendRedirect("book.html?success=true&username="+ request.getParameter("username")); //transfer to book.html page
 				} else {
 					out.print("<b>Invalid password. Try again!</b></p>");
 				}
