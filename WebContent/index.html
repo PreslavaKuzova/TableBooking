@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body
+	background="http://molinarealcelebraciones.com/wp-content/uploads/2016/12/Molina-Real-tambi%C3%A9n-para-cenas-y-comidas-de-empresa-1920.jpg">
+<head>
+<link rel="stylesheet" type="text/css" href="CSS/welcome-design.css">
+<style>
+.mySlides {display:none;}
+</style>
+<meta charset="UTF-8">
+<title>Welcome</title>
+</head>
+<body>
+
+	<div class="trasperant-strip">
+		<img class="cutlery" src="Graphics/cutlery.png"/>
+		<h1 class="restaurant-name">Flavour Collision</h1>
+		<img class="divider-top" src="Graphics/gray-divider.png"/>
+		
+		<img class="divider-bottom" src="Graphics/gray-divider.png"/>
+		<p class="open-everyday">Open every day 12PM-2AM</p>
+		
+		<p class="mySlides">123 6th St.<br>Melbourne, FL 32904</p>
+		<p class="mySlides">71 Pilgrim Avenue<br>Chevy Chase, MD 20815</p>
+		<p class="mySlides">70 Bowman St.<br>South Windsor, CT 06074</p>
+		<p class="mySlides">4 Goldfield Rd.<br>Honolulu, HI 96815</p>
+		<p class="mySlides">44 Shirley Ave.<br>West Chicago, IL 60185</p>
+	</div>
+	
+	<div class="buttons">
+		<form action="index.html">
+			<input class="button" type="submit" value="HOME" disabled/>
+		</form>
+		
+		<form action="login.jsp">
+			<input class="button" type="submit" value="BOOK A TABLE" />
+		</form>
+		
+		<form action="registration.html">
+			<input class="button" type="submit" value="SIGN UP" />
+		</form>
+	</div>
+
+<script>
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none"; 
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1} 
+    x[slideIndex-1].style.display = "block"; 
+    setTimeout(carousel, 5000); 
+}
+</script>
+</body>
+</html>
