@@ -6,7 +6,7 @@
 	background="http://molinarealcelebraciones.com/wp-content/uploads/2016/12/Molina-Real-tambi%C3%A9n-para-cenas-y-comidas-de-empresa-1920.jpg">
 <head>
 <link rel="stylesheet" type="text/css"
-	href="CSS/registrationjsp-design.css">
+	href="CSS/registration-design.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registration</title>
 </head>
@@ -21,19 +21,28 @@
 			<input class="button" type="submit" value="BOOK A TABLE" />
 		</form>
 
-		<form action="registration.html">
+		<form action="registration.jsp">
 			<input class="button" type="submit" value="SIGN UP" disabled />
 		</form>
 	</div>
 
 	<div class="wrapper">
-		<jsp:useBean id="database" class="com.database.UserDatabase" />
+		<h1 class="registration-text">REGISTRATION</h1>
+		<form action="registration.jsp">
+			<div class="registration-info">
+				<input class="field" type="text" name="username" id="username"
+					placeholder="Enter a desired username" required /> <input
+					class="field" type="text" name="email" id="email"
+					placeholder="Enter your email" required /> <input class="field"
+					type="password" name="password" id="password"
+					placeholder="Enter password" required /> <input class="field"
+					type="password" name="password-conf" id="password-conf"
+					placeholder="Confirm password" required />
+			</div>
+			<input class="registration-button" type="submit" value="Register" />
+		</form>
 
-		<%
-			String usernameAlreadyBeentaken = "Sorry, the username has already been taken!";
-			String invalidPassword = "Sorry, the passwords you entered don't match!";
-			String successfulRegistration = ", you registered successfully!";
-		%>
+		<jsp:useBean id="database" class="com.database.UserDatabase" />
 
 		<%
 			String username = request.getParameter("username");
@@ -44,15 +53,17 @@
 
 		<p class="feedback">
 			<%
-				if (password.equals(passwordConf)) {
-					if (database.checkNames(username)) {
-						out.print(usernameAlreadyBeentaken);
+				if (username != null) {
+					if (password.equals(passwordConf)) {
+						if (database.checkNames(username)) {
+							out.print("<b>Sorry, the username has already been taken!</b>");
+						} else {
+							database.insertData(username, email, password);
+							out.print("<b>" + username + ", you registered successfully!</b>");
+						}
 					} else {
-						database.insertData(username, email, password);
-						out.print(username + successfulRegistration);
+						out.print("<b>Sorry, the passwords you entered don't match!</b>");
 					}
-				} else {
-					out.print(invalidPassword);
 				}
 			%>
 		</p>

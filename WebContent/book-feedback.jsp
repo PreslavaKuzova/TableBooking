@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<% out.print("a chestito"); %>
+<p>a chestito</p>
 </body>
 </html>

@@ -77,7 +77,6 @@ public class UserDatabase {
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()){
 				String passCheck = rs.getString("password");
-				System.out.println(passCheck);
 				if(passCheck.equals(password)) {
 					doesMatch = true;
 				}

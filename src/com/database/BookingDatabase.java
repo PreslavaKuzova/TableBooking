@@ -40,8 +40,8 @@ public class BookingDatabase {
 	public void insertData(String username, String date, String partySize, String time) {
 		try {
 			Statement stmt = connection.createStatement();
-			String sql = "INSERT INTO users (username, date, partySize, time) VALUES('" + username + "', '" + date
-					+ "', '" + "', '" + partySize + "', '" + time + "');";
+			String sql = "INSERT INTO bookedTables (username, date, partySize, time) VALUES('" + username + "', '" + date
+					+ "', '" + partySize + "', '" + time + "');";
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			stmt.close();

@@ -19,7 +19,7 @@
 			<input class="button" type="submit" value="BOOK A TABLE" disabled />
 		</form>
 
-		<form action="registration.html">
+		<form action="registration.jsp">
 			<input class="button" type="submit" value="SIGN UP" />
 		</form>
 	</div>
@@ -49,7 +49,7 @@
 					String password = request.getParameter("password");
 					if (database.checkNames(username)) {
 						if (database.checkPassword(username, password)) {
-							response.sendRedirect("book.html?username=" + request.getParameter("username")); //transfer to book.html page
+							response.sendRedirect("book.jsp?username=" + request.getParameter("username")); //transfer to book.jsp page
 						} else {
 							out.print("<b>Invalid password. Try again!</b></p>");
 						}
@@ -63,7 +63,7 @@
 
 		<p class="registration-information">
 			If you don't have an account, you can sign up from <a
-				href="registration.html"> HERE</a>.
+				href="registration.jsp"> HERE</a>.
 		</p>
 	</div>
 
