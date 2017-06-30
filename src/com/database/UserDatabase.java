@@ -56,7 +56,6 @@ public class UserDatabase {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT username FROM users;");
-
 			while (rs.next()) {
 				if (username.equals(rs.getString("username"))) {
 					doesMatch = true;
@@ -74,13 +73,18 @@ public class UserDatabase {
 		
 		try {
 			Statement stmt = connection.createStatement();
-			if (stmt.executeQuery("SELECT password FROM users WHERE username LIKE '%" + username + "%';").equals(password)) {
-				doesMatch = true;
+			String sql = ("SELECT password FROM users WHERE username LIKE '%" + username + "%';");
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()){
+				String passCheck = rs.getString("password");
+				System.out.println(passCheck);
+				if(passCheck.equals(password)) {
+					doesMatch = true;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return doesMatch;
 	}
 }
