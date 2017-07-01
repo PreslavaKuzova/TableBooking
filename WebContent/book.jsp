@@ -1,3 +1,4 @@
+<%@page import="javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Calendar"%>
@@ -17,7 +18,7 @@
 			<input class="button" type="submit" value="HOME" />
 		</form>
 
-		<form action="book.html">
+		<form action="book.jsp">
 			<input class="button" type="submit" value="BOOK A TABLE" disabled />
 		</form>
 
@@ -28,7 +29,7 @@
 
 	<div class="wrapper">
 		<h1 class="reservations">RESERVATIONS</h1>
-		<form action="book.jsp">
+		<form action="book.jsp" method="post">
 			<div id="calendar"></div>
 
 			<script
@@ -47,7 +48,7 @@
 
 			<div class="date">
 				<select class="left-selection" name="DOBDay">
-					<option>Day</option>
+					<option value="0">Day</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -80,7 +81,7 @@
 					<option value="30">30</option>
 					<option value="31">31</option>
 				</select> <select class="right-selection" name="DOBMonth">
-					<option>Month</option>
+					<option value="0">Month</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
 					<option value="3">March</option>
@@ -97,7 +98,7 @@
 			</div>
 
 			<select class="party-size-selection" name="DOBPartySize">
-				<option>Party size</option>
+				<option value="null">Party size</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
 				<option value="4">4</option>
@@ -115,7 +116,7 @@
 
 			<div class="time">
 				<select class="left-selection" name="DOBHour">
-					<option>Hour</option>
+					<option value="null">Hour</option>
 					<option value="12">12AM</option>
 					<option value="13">1PM</option>
 					<option value="14">2PM</option>
@@ -130,7 +131,7 @@
 					<option value="23">11PM</option>
 					<option value="24">12PM</option>
 				</select> <select class="right-selection" name="DOBMinutes">
-					<option>Minutes</option>
+					<option value="null">Minutes</option>
 					<option value="0">00</option>
 					<option value="15">15</option>
 					<option value="30">30</option>
@@ -141,19 +142,20 @@
 			<input class="reservation-button" type="submit" value="BOOK" />
 		</form>
 	</div>
-	
-	<% String tableOwner = request.getParameter("usertname"); %>
-		
+
+	<%
+		String tableOwner = request.getParameter("usertname");
+	%>
+
 	<jsp:useBean id="database" class="com.database.BookingDatabase"></jsp:useBean>
 	<%!Calendar c = Calendar.getInstance();%>
 	<%
 		if (request.getParameter("DOBDay") != null && request.getParameter("DOBMonth") != null
 				&& request.getParameter("DOBPartySize") != null && request.getParameter("DOBHour") != null
 				&& request.getParameter("DOBMinutes") != null) {
-			
+
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			int month = c.get(Calendar.MONTH);
-			out.print(day + " " + month);
 
 			int lday = Integer.parseInt(request.getParameter("DOBDay"));
 			int lmonth = Integer.parseInt(request.getParameter("DOBMonth"));
@@ -162,15 +164,39 @@
 			String lpartySize = request.getParameter("DOBPartySize");
 
 			String time = request.getParameter("DOBHour") + ":" + request.getParameter("DOBMinutes");
-			 if (month == lmonth){
-				 if (day <= lmonth) {
-					 database.insertData(tableOwner, date, lpartySize, time);
-					 response.sendRedirect("book-feedback.jsp");
-				 }
-			 } else if (month < lmonth) {
-				 	database.insertData(tableOwner, date, lpartySize, time);
-					response.sendRedirect("book-feedback.jsp");
-			 }
+			if (month == lmonth) {
+				if (day <= lday) {
+					switch (lmonth) {
+					case 1:
+					case 4:
+					case 6:
+					case 9:
+					case 11: {
+						if (lday <= 30) {
+							database.insertData(tableOwner, date, lpartySize, time);
+							response.sendRedirect("book-feedback.jsp");
+						}
+						break;
+					}
+					case 2: {
+						int year = c.get(Calendar.YEAR);
+						if (((year % 4 == 0) && !(year % 100 == 0)) || (year % 400 == 0)) {
+							if (lday <= 29) {
+								database.insertData(tableOwner, date, lpartySize, time);
+								response.sendRedirect("book-feedback.jsp");
+							}
+						} else if (lday <= 28) {
+							database.insertData(tableOwner, date, lpartySize, time);
+							response.sendRedirect("book-feedback.jsp");
+						}
+					}
+					break;
+					}
+				}
+			} else if (month < lmonth) {
+				database.insertData(tableOwner, date, lpartySize, time);
+				response.sendRedirect("book-feedback.jsp");
+			}
 		}
 	%>
 

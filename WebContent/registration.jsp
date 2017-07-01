@@ -17,7 +17,7 @@
 			<input class="button" type="submit" value="HOME" />
 		</form>
 
-		<form action="login.html">
+		<form action="login.jsp">
 			<input class="button" type="submit" value="BOOK A TABLE" />
 		</form>
 
@@ -51,7 +51,7 @@
 			String passwordConf = request.getParameter("password-conf");
 		%>
 
-		<p class="feedback">
+		<h1 class="feedback">
 			<%
 				if (username != null) {
 					if (password.equals(passwordConf)) {
@@ -66,7 +66,7 @@
 					}
 				}
 			%>
-		</p>
+		</h1>
 	</div>
 
 </body>
